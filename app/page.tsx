@@ -156,7 +156,7 @@ export default function HomePage() {
             fill
             className="object-cover"
             priority
-            unoptimized
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-[#1D2D44]/75" />
         </div>
@@ -208,7 +208,7 @@ export default function HomePage() {
                     alt={logo.alt}
                     fill
                     className="object-contain"
-                    unoptimized
+                    loading="lazy"
                   />
                 </div>
               ))}
@@ -253,7 +253,7 @@ export default function HomePage() {
                     alt={`${cat.name} ingredients`}
                     fill
                     className="object-cover"
-                    unoptimized
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1D2D44]/60 to-transparent" />
                   <div className="absolute bottom-3 left-4">
@@ -314,7 +314,7 @@ export default function HomePage() {
                     alt={`${item.title} icon`}
                     fill
                     className="object-contain"
-                    unoptimized
+                    loading="lazy"
                   />
                 </div>
                 <h3 className="text-lg font-bold text-[#1D2D44] mb-2">
@@ -364,7 +364,7 @@ export default function HomePage() {
                     alt={`${step.title} process icon`}
                     fill
                     className="object-contain brightness-[2]"
-                    unoptimized
+                    loading="lazy"
                   />
                 </div>
                 <div className="text-[#F5CDA0] text-xs font-bold uppercase tracking-widest mb-1">
@@ -404,7 +404,7 @@ export default function HomePage() {
                 alt="Frisbee — a symbol of how AQF operates: open, direct, no hidden complexity"
                 fill
                 className="object-cover"
-                unoptimized
+                loading="lazy"
               />
             </div>
             <div>
@@ -507,7 +507,7 @@ export default function HomePage() {
                   alt="Sustainable Indian farming practices"
                   fill
                   className="object-cover"
-                  unoptimized
+                  loading="lazy"
                 />
               </div>
               <div className="relative h-64 rounded-sm overflow-hidden mt-8">
@@ -516,7 +516,7 @@ export default function HomePage() {
                   alt="Seedlings — the beginning of AQF traceable supply chain"
                   fill
                   className="object-cover"
-                  unoptimized
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -636,7 +636,7 @@ export default function HomePage() {
                 alt="Compliance documentation and certification management"
                 fill
                 className="object-cover"
-                unoptimized
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-[#1D3A5F]/30" />
             </div>

@@ -90,7 +90,7 @@ export default async function ProductPage({ params }: Props) {
                 fill
                 className="object-cover"
                 priority
-                unoptimized
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
 
@@ -282,7 +282,7 @@ export default async function ProductPage({ params }: Props) {
                       alt={rel.name}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      unoptimized
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                     <div className="absolute top-2.5 left-2.5 flex gap-1.5 flex-wrap">
                       {rel.certifications.map((cert) => (

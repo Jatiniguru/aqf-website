@@ -25,7 +25,7 @@ export default function ProductsPage() {
             alt="AQF ingredient range"
             fill
             className="object-cover"
-            unoptimized
+            sizes="100vw"
           />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

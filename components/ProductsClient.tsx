@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { products, categoryData, type Category } from "@/app/data/products";
+import { products, categories, type Category } from "@/app/data/products";
 
 export default function ProductsClient() {
   const [search, setSearch] = useState("");
@@ -15,15 +15,9 @@ export default function ProductsClient() {
       search === "" ||
       p.name.toLowerCase().includes(search.toLowerCase()) ||
       p.category.toLowerCase().includes(search.toLowerCase()) ||
-      p.applications.some((a) =>
-        a.toLowerCase().includes(search.toLowerCase())
-      );
-
-    const matchesCategory =
-      activeCategory === "All" || p.category === activeCategory;
-
+      p.applications.some((a) => a.toLowerCase().includes(search.toLowerCase()));
+    const matchesCategory = activeCategory === "All" || p.category === activeCategory;
     const matchesPet = !petOnly || p.petSuitable;
-
     return matchesSearch && matchesCategory && matchesPet;
   });
 
@@ -31,297 +25,149 @@ export default function ProductsClient() {
 
   return (
     <div>
-      {/* Search + Pet Filter */}
-      <div className="mb-8">
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1">
-            <svg
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a0aec0]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            <input
-              id="product-search"
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by name, application, or category…"
-              className="w-full pl-11 pr-4 py-3 border border-[#E9E2D6] rounded-lg text-sm text-[#1D2D44] placeholder-[#a0aec0] focus:outline-none focus:ring-2 focus:ring-[#C46A4A] focus:border-transparent bg-white shadow-sm"
-            />
-          </div>
-          <label className="flex items-center gap-2.5 cursor-pointer bg-white border border-[#E9E2D6] rounded-lg px-4 py-3 shadow-sm hover:border-[#C46A4A] transition-colors">
-            <input
-              type="checkbox"
-              checked={petOnly}
-              onChange={(e) => setPetOnly(e.target.checked)}
-              className="w-4 h-4 accent-[#C46A4A]"
-            />
-            <span className="text-sm font-medium text-[#5C5C5C] whitespace-nowrap">
-              Pet-suitable only
-            </span>
-          </label>
+      {/* Search bar */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-8">
+        <div className="relative flex-1">
+          <svg
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search ingredients…"
+            className="w-full pl-11 pr-4 py-3 border border-gray-200 text-sm text-[#1D2D44] placeholder-gray-400 focus:outline-none focus:border-[#1D2D44] bg-white"
+          />
         </div>
+        <label className="flex items-center gap-2.5 cursor-pointer border border-gray-200 px-4 py-3 hover:border-[#1D2D44] transition-colors">
+          <input
+            type="checkbox"
+            checked={petOnly}
+            onChange={(e) => setPetOnly(e.target.checked)}
+            className="w-4 h-4 accent-[#C46A4A]"
+          />
+          <span className="text-xs font-semibold uppercase tracking-widest text-gray-500 whitespace-nowrap">
+            Pet-suitable only
+          </span>
+        </label>
       </div>
 
-      {/* Category Cards */}
-      <div className="mb-10">
-        <p className="text-xs font-semibold text-[#5C5C5C] uppercase tracking-widest mb-4">
-          Browse by Category
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-          {categoryData.map((cat) => {
-            const isActive = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id as Category)}
-                className={`relative overflow-hidden rounded-xl aspect-[4/3] group focus:outline-none focus:ring-2 focus:ring-[#C46A4A] focus:ring-offset-2 transition-all ${
-                  isActive
-                    ? "ring-3 ring-[#C46A4A] ring-offset-2 scale-[0.98]"
-                    : "hover:scale-[0.98]"
-                }`}
-              >
-                <Image
-                  src={cat.image}
-                  alt={cat.label}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  unoptimized
-                />
-                {/* Gradient overlay */}
-                <div
-                  className={`absolute inset-0 transition-opacity duration-200 ${
-                    isActive
-                      ? "bg-gradient-to-t from-[#C46A4A]/90 via-[#C46A4A]/40 to-transparent"
-                      : "bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80"
-                  }`}
-                />
-                {/* Label */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 text-left">
-                  <p className="text-white font-bold text-sm leading-tight">
-                    {cat.label}
-                  </p>
-                  <p className="text-white/70 text-xs mt-0.5">
-                    {cat.description}
-                  </p>
-                </div>
-                {/* Active tick */}
-                {isActive && (
-                  <div className="absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-3.5 h-3.5 text-[#C46A4A]"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Results bar */}
-      <div className="mb-6 flex items-center justify-between">
-        <p className="text-sm text-[#5C5C5C]">
-          <span className="font-semibold text-[#1D2D44]">{filtered.length}</span>{" "}
-          of {products.length} ingredients
-          {activeCategory !== "All" && (
-            <span className="ml-1">in <span className="font-medium text-[#1D2D44]">{activeCategory}</span></span>
-          )}
-        </p>
+      {/* Category tabs — Mogutable style */}
+      <div className="flex flex-wrap border-b border-gray-200 mb-10 gap-0">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`px-5 py-3 text-xs font-semibold uppercase tracking-widest border-b-2 -mb-px transition-colors ${
+              activeCategory === cat
+                ? "border-[#1D2D44] text-[#1D2D44]"
+                : "border-transparent text-gray-400 hover:text-gray-700"
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
         {hasFilters && (
           <button
-            onClick={() => {
-              setSearch("");
-              setActiveCategory("All");
-              setPetOnly(false);
-            }}
-            className="text-sm text-[#C46A4A] hover:text-[#a8593c] font-medium flex items-center gap-1"
+            onClick={() => { setSearch(""); setActiveCategory("All"); setPetOnly(false); }}
+            className="ml-auto px-4 py-3 text-xs text-[#C46A4A] hover:text-[#a8593c] font-semibold uppercase tracking-widest flex items-center gap-1"
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
-            Clear filters
+            Clear
           </button>
         )}
       </div>
 
-      {/* Product grid */}
+      {/* Results count */}
+      <p className="text-xs text-gray-400 uppercase tracking-widest mb-8">
+        {filtered.length} of {products.length} ingredients
+      </p>
+
+      {/* Product grid — Mogutable style: full-bleed, 4-col */}
       {filtered.length === 0 ? (
-        <div className="text-center py-20 bg-white rounded-xl border border-[#E9E2D6]">
-          <div className="w-14 h-14 bg-[#F7F4EE] rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-6 h-6 text-[#a0aec0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-          <p className="text-[#1D2D44] font-semibold text-lg mb-1">No ingredients found</p>
-          <p className="text-sm text-[#a0aec0]">Try adjusting your search or filter criteria</p>
+        <div className="text-center py-24 border border-gray-100">
+          <p className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-1">No ingredients found</p>
+          <p className="text-xs text-gray-300">Try adjusting your search or filters</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-12">
           {filtered.map((product) => (
-            <article
-              key={product.id}
-              className="bg-white rounded-xl border border-[#E9E2D6] shadow-sm hover:shadow-lg transition-all duration-200 overflow-hidden group"
-            >
-              {/* Product image */}
-              <div className="relative h-48 overflow-hidden bg-[#F7F4EE]">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  unoptimized
-                />
-                {/* Badges over image */}
-                <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
-                  <span className="text-xs font-semibold px-2.5 py-1 bg-white/90 backdrop-blur-sm text-[#C46A4A] rounded-full shadow-sm">
-                    {product.category}
-                  </span>
+            <article key={product.id}>
+              <Link href={`/products/${product.id}/`} className="block group">
+                {/* Full-bleed square image */}
+                <div className="relative aspect-square overflow-hidden bg-gray-50 mb-4">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
                   {product.petSuitable && (
-                    <span className="text-xs font-semibold px-2.5 py-1 bg-[#1D2D44]/90 backdrop-blur-sm text-[#F5CDA0] rounded-full shadow-sm">
+                    <div className="absolute top-0 left-0 bg-[#1D2D44] text-white text-xs px-2 py-1 uppercase tracking-widest font-semibold">
                       Pet
-                    </span>
+                    </div>
                   )}
                 </div>
-                {/* Certification badge */}
-                <div className="absolute top-3 right-3">
-                  {product.certifications.map((cert) => (
-                    <span
-                      key={cert}
-                      className="text-xs font-semibold px-2.5 py-1 bg-white/90 backdrop-blur-sm text-[#3A4E6D] rounded-full shadow-sm"
-                    >
-                      {cert}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Card content */}
-              <div className="p-5">
-                <h2 className="text-base font-bold text-[#1D2D44] mb-2 leading-snug">
+                {/* Product info below image */}
+                <p className="text-xs text-[#C46A4A] uppercase tracking-widest font-semibold mb-1">
+                  {product.category}
+                </p>
+                <h2 className="text-sm font-bold text-[#1D2D44] uppercase tracking-wide leading-snug mb-1">
                   {product.name}
                 </h2>
-                <p className="text-sm text-[#5C5C5C] leading-relaxed mb-4 line-clamp-2">
-                  {product.description}
-                </p>
-
-                {/* Quick specs */}
-                <div className="flex gap-4 text-xs text-[#5C5C5C] mb-4 pb-4 border-b border-[#F7F4EE]">
-                  <div className="flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5 text-[#C46A4A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <span><span className="font-semibold text-[#1D2D44]">Origin:</span> {product.origin}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5 text-[#C46A4A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-                    <span><span className="font-semibold text-[#1D2D44]">Format:</span> {product.format}</span>
-                  </div>
-                </div>
-
-                <Link
-                  href={`/products/${product.id}/`}
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#C46A4A] hover:text-[#a8593c] transition-colors group/link"
-                >
-                  View Full Specification
-                  <svg
-                    className="w-4 h-4 transition-transform group-hover/link:translate-x-0.5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </div>
+                <p className="text-xs text-gray-400">{product.format}</p>
+              </Link>
             </article>
           ))}
         </div>
       )}
 
-      {/* Table view (desktop) */}
-      <div className="mt-16 hidden lg:block">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-[#1D2D44]">Quick Reference Table</h2>
-          <span className="text-sm text-[#5C5C5C]">{filtered.length} products shown</span>
-        </div>
-        <div className="overflow-x-auto rounded-xl border border-[#E9E2D6] shadow-sm">
-          <table className="w-full text-sm">
+      {/* Quick reference table (desktop only) */}
+      <div className="mt-24 hidden lg:block">
+        <div className="border-t border-gray-200 pt-12">
+          <p className="text-xs text-gray-400 uppercase tracking-widest mb-6">Quick Reference Table</p>
+          <table className="w-full text-sm border-collapse">
             <thead>
-              <tr className="bg-[#1D2D44] text-white">
-                <th className="text-left px-5 py-3.5 font-semibold">Product</th>
-                <th className="text-left px-5 py-3.5 font-semibold">Category</th>
-                <th className="text-left px-5 py-3.5 font-semibold">Format</th>
-                <th className="text-left px-5 py-3.5 font-semibold">Certifications</th>
-                <th className="text-left px-5 py-3.5 font-semibold">Pet</th>
-                <th className="text-left px-5 py-3.5 font-semibold">Origin</th>
-                <th className="px-5 py-3.5" />
+              <tr className="border-b border-gray-200">
+                <th className="text-left py-3 pr-6 text-xs font-semibold uppercase tracking-widest text-gray-500">Product</th>
+                <th className="text-left py-3 pr-6 text-xs font-semibold uppercase tracking-widest text-gray-500">Category</th>
+                <th className="text-left py-3 pr-6 text-xs font-semibold uppercase tracking-widest text-gray-500">Format</th>
+                <th className="text-left py-3 pr-6 text-xs font-semibold uppercase tracking-widest text-gray-500">Certifications</th>
+                <th className="text-left py-3 pr-6 text-xs font-semibold uppercase tracking-widest text-gray-500">Pet</th>
+                <th className="py-3" />
               </tr>
             </thead>
             <tbody>
-              {filtered.map((product, idx) => (
-                <tr
-                  key={product.id}
-                  className={`border-t border-[#E9E2D6] hover:bg-[#FFF8F0] transition-colors ${
-                    idx % 2 === 0 ? "bg-white" : "bg-[#F7F4EE]"
-                  }`}
-                >
-                  <td className="px-5 py-3.5 font-semibold text-[#1D2D44]">
+              {filtered.map((product) => (
+                <tr key={product.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                  <td className="py-4 pr-6 font-semibold text-[#1D2D44] text-xs uppercase tracking-wide">
                     {product.name}
                   </td>
-                  <td className="px-5 py-3.5 text-[#5C5C5C]">
-                    {product.category}
-                  </td>
-                  <td className="px-5 py-3.5 text-[#5C5C5C]">{product.format}</td>
-                  <td className="px-5 py-3.5">
-                    <div className="flex gap-1 flex-wrap">
-                      {product.certifications.map((c) => (
-                        <span
-                          key={c}
-                          className="text-xs px-2 py-0.5 bg-[#F5CDA0] text-[#1D2D44] rounded-full font-medium"
-                        >
-                          {c}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5">
-                    {product.petSuitable ? (
-                      <span className="inline-flex items-center justify-center w-5 h-5 bg-[#C46A4A] rounded-full">
-                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
+                  <td className="py-4 pr-6 text-xs text-gray-500">{product.category}</td>
+                  <td className="py-4 pr-6 text-xs text-gray-500">{product.format}</td>
+                  <td className="py-4 pr-6">
+                    {product.certifications.map((c) => (
+                      <span key={c} className="text-xs border border-gray-200 px-2 py-0.5 text-gray-600 mr-1">
+                        {c}
                       </span>
-                    ) : (
-                      <span className="text-[#E9E2D6]">—</span>
-                    )}
+                    ))}
                   </td>
-                  <td className="px-5 py-3.5 text-[#5C5C5C]">{product.origin}</td>
-                  <td className="px-5 py-3.5">
+                  <td className="py-4 pr-6 text-xs text-gray-400">
+                    {product.petSuitable ? "✓" : "—"}
+                  </td>
+                  <td className="py-4">
                     <Link
                       href={`/products/${product.id}/`}
-                      className="text-xs font-semibold text-[#C46A4A] hover:text-[#a8593c] transition-colors whitespace-nowrap"
+                      className="text-xs font-semibold uppercase tracking-widest text-[#C46A4A] hover:text-[#1D2D44] transition-colors"
                     >
-                      View Spec →
+                      View →
                     </Link>
                   </td>
                 </tr>
