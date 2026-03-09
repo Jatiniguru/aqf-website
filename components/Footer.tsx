@@ -44,9 +44,24 @@ export default function Footer() {
                 />
               </div>
             </Link>
-            <p className="text-xs text-gray-500 leading-relaxed mb-5">
+            <p className="text-xs text-gray-500 leading-relaxed mb-4">
               Direct-from-origin Indian ingredients with verified UK/EU-grade compliance. Trusted by B2B manufacturers across Europe.
             </p>
+            <div className="space-y-2 mb-5">
+              <a href="mailto:info@aqfingredients.com" className="flex items-center gap-2 text-xs text-gray-500 hover:text-[#1D2D44] transition-colors">
+                <svg className="w-3.5 h-3.5 text-[#C46A4A] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                info@aqfingredients.com
+              </a>
+              <div className="flex items-start gap-2 text-xs text-gray-500">
+                <svg className="w-3.5 h-3.5 text-[#C46A4A] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>UK Distribution Hub<br />Serving UK &amp; EU Markets</span>
+              </div>
+            </div>
             <div className="flex flex-wrap gap-1.5">
               {["BRCGS", "FSSC 22000", "ISO 9001", "Kosher", "Halal"].map((cert) => (
                 <span key={cert} className="text-xs border border-gray-300 px-2 py-0.5 text-gray-500 font-medium">

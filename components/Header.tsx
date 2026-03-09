@@ -21,7 +21,7 @@ export default function Header() {
     <>
       {/* Announcement bar */}
       <div className="bg-[#1D2D44] text-white text-xs text-center py-2 px-4 tracking-wide">
-        All products Kosher certified &nbsp;·&nbsp; COA on every order &nbsp;·&nbsp; Direct from Indian origin
+        Premium Indian Ingredients for Food, Nutraceutical &amp; Pet Nutrition &nbsp;·&nbsp; Kosher-certified options available &nbsp;·&nbsp; COA on every order
       </div>
 
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">

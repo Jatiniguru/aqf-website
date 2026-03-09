@@ -110,14 +110,11 @@ const trustLogos = [
   { src: "/images/trust-bar/FSSC 22000.png", alt: "FSSC 22000 Certified" },
   { src: "/images/trust-bar/KLBD.png", alt: "KLBD Kosher Certified" },
   { src: "/images/trust-bar/iso-9001-seeklogo.png", alt: "ISO 9001 Certified" },
-  {
-    src: "/images/trust-bar/vecteezy_halal-logo-green-and-white_65384070.jpg",
-    alt: "Halal Certified",
-  },
-  {
-    src: "/images/trust-bar/Spice Board India.png",
-    alt: "Spice Board India Registered",
-  },
+  { src: "/images/trust-bar/vecteezy_halal-logo-green-and-white_65384070.jpg", alt: "Halal Certified" },
+  { src: "/images/trust-bar/Spice Board India.png", alt: "Spice Board India Registered" },
+  { src: "/images/trust-bar/Badatz-Beit-Yosef.png", alt: "Badatz Beit Yosef Certified" },
+  { src: "/images/trust-bar/Badatz-Jerusalem.jpg", alt: "Badatz Jerusalem Certified" },
+  { src: "/images/trust-bar/Badatz-Mehadrin.jpg", alt: "Badatz Mehadrin Certified" },
 ];
 
 const technicalInsights = [
@@ -171,6 +168,9 @@ export default function HomePage() {
                 Verified UK/EU-Grade Compliance.
               </span>
             </h1>
+            <p className="text-xl text-[#F5CDA0] font-medium mb-4">
+              Premium Indian Ingredients for Food, Nutraceutical &amp; Pet Nutrition — including Kosher-certified options.
+            </p>
             <p className="text-lg text-[#E2D5C3] leading-relaxed mb-10 max-w-2xl">
               Stop buying from middlemen who cannot answer your compliance
               questions. AQF supplies certified dehydrated vegetables, fruits,
@@ -178,12 +178,15 @@ export default function HomePage() {
               full traceability documentation included as standard.
             </p>
             <div className="flex flex-wrap gap-4">
-              <CTAButton href="/contact/" variant="primary" size="lg">
+              <Link
+                href="/contact/"
+                className="inline-flex items-center justify-center px-10 py-4 text-base font-bold rounded-lg bg-[#C46A4A] hover:bg-[#a8593c] text-white transition-colors shadow-lg shadow-[#C46A4A]/30"
+              >
                 Request Quote &amp; Specs
-              </CTAButton>
+              </Link>
               <Link
                 href="/products/"
-                className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-sm border-2 border-white text-white hover:bg-white hover:text-[#1D2D44] transition-colors"
+                className="inline-flex items-center justify-center px-10 py-4 text-base font-bold rounded-lg border-2 border-white text-white hover:bg-white hover:text-[#1D2D44] transition-colors"
               >
                 View Ingredients
               </Link>
@@ -192,23 +195,24 @@ export default function HomePage() {
         </div>
 
         {/* Trust bar */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 bg-white/90 backdrop-blur-sm border-t border-[#E9E2D6]">
+        <div className="absolute bottom-0 left-0 right-0 z-10 bg-white/95 backdrop-blur-sm border-t border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
-              <span className="text-xs font-semibold text-[#5C5C5C] uppercase tracking-wide mr-2 hidden sm:block">
+            <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
+              <span className="text-xs font-bold text-[#1D2D44] uppercase tracking-widest mr-3 flex-shrink-0">
                 Certified by:
               </span>
               {trustLogos.map((logo) => (
                 <div
                   key={logo.alt}
-                  className="relative h-8 w-16 sm:w-20 flex-shrink-0"
+                  className="relative h-10 w-20 flex-shrink-0 bg-white rounded border border-gray-100 p-1"
                 >
                   <Image
                     src={logo.src}
                     alt={logo.alt}
                     fill
-                    className="object-contain"
+                    className="object-contain p-1"
                     loading="lazy"
+                    sizes="80px"
                   />
                 </div>
               ))}
@@ -219,7 +223,7 @@ export default function HomePage() {
 
       {/* Product Categories */}
       <section
-        className="py-20 bg-[#F7F4EE]"
+        className="py-20 bg-[#F1F5F9]"
         aria-labelledby="categories-heading"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -245,7 +249,7 @@ export default function HomePage() {
               <Link
                 key={cat.name}
                 href="/products/"
-                className="group block bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                className="group block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="relative h-52">
                   <Image
@@ -282,7 +286,7 @@ export default function HomePage() {
 
       {/* Who We Serve */}
       <section
-        className="py-20 bg-[#FFF8F0]"
+        className="py-20 bg-[#F8FAFC]"
         aria-labelledby="who-we-serve-heading"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -393,18 +397,19 @@ export default function HomePage() {
 
       {/* Integrity & Culture */}
       <section
-        className="py-20 bg-[#FFF8F0]"
+        className="py-20 bg-[#F8FAFC]"
         aria-labelledby="integrity-heading"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="relative h-80 lg:h-full min-h-[400px] rounded-sm overflow-hidden">
+            <div className="relative h-80 lg:h-full min-h-[400px] rounded-xl overflow-hidden shadow-lg">
               <Image
-                src="/images/integrity/vecteezy_a-flying-disc-for-frisbee-fun_30622968.jpg"
-                alt="Frisbee — a symbol of how AQF operates: open, direct, no hidden complexity"
+                src="/images/integrity/frisbee-photo.png"
+                alt="AQF team playing Ultimate Frisbee — a symbol of how we operate: open, direct, no hidden complexity"
                 fill
                 className="object-cover"
                 loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
             <div>
@@ -448,7 +453,7 @@ export default function HomePage() {
       </section>
 
       {/* ESG & Impact */}
-      <section className="py-20 bg-[#F7F4EE]" aria-labelledby="esg-heading">
+      <section className="py-20 bg-[#F1F5F9]" aria-labelledby="esg-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -526,7 +531,7 @@ export default function HomePage() {
 
       {/* Technical Insights */}
       <section
-        className="py-20 bg-[#FFF8F0]"
+        className="py-20 bg-[#F8FAFC]"
         aria-labelledby="insights-heading"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -646,7 +651,7 @@ export default function HomePage() {
 
       {/* Inquiry Section */}
       <section
-        className="py-20 bg-[#FFF8F0]"
+        className="py-20 bg-[#F8FAFC]"
         aria-labelledby="inquiry-heading"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -699,26 +704,26 @@ export default function HomePage() {
                     <label className="block text-xs font-semibold text-[#5C5C5C] uppercase tracking-wide mb-1">
                       First Name
                     </label>
-                    <div className="w-full h-10 bg-[#F7F4EE] rounded-sm border border-[#E9E2D6]" />
+                    <div className="w-full h-10 bg-[#F1F5F9] rounded-sm border border-[#E9E2D6]" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-[#5C5C5C] uppercase tracking-wide mb-1">
                       Company
                     </label>
-                    <div className="w-full h-10 bg-[#F7F4EE] rounded-sm border border-[#E9E2D6]" />
+                    <div className="w-full h-10 bg-[#F1F5F9] rounded-sm border border-[#E9E2D6]" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[#5C5C5C] uppercase tracking-wide mb-1">
                     Email
                   </label>
-                  <div className="w-full h-10 bg-[#F7F4EE] rounded-sm border border-[#E9E2D6]" />
+                  <div className="w-full h-10 bg-[#F1F5F9] rounded-sm border border-[#E9E2D6]" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[#5C5C5C] uppercase tracking-wide mb-1">
                     Ingredient(s) of Interest
                   </label>
-                  <div className="w-full h-24 bg-[#F7F4EE] rounded-sm border border-[#E9E2D6]" />
+                  <div className="w-full h-24 bg-[#F1F5F9] rounded-sm border border-[#E9E2D6]" />
                 </div>
                 <Link
                   href="/contact/"
